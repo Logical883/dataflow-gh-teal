@@ -11,9 +11,8 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: #F8F7FF; color: #111827; }
     input, select, button, textarea { font-family: 'DM Sans', sans-serif; }
-    :root { --violet: #5B21B6; --violet-mid: #7C3AED; --violet-light: #EDE9FE; --violet-dark: #2D1B6B; }
+    :root { --violet: #5B21B6; --violet-mid: #7C3AED; --violet-light: #EDE9FE; }
     @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes spin { to { transform: rotate(360deg); } }
 
     nav {
       background: #fff; border-bottom: 1px solid #E5E7EB;
@@ -46,6 +45,13 @@
     .bundle-card { background: #fff; border-radius: 16px; padding: 20px 18px; border: 1px solid #E5E7EB; box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(91,33,182,0.06); display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease; animation: fadeUp .4s ease both; }
     .bundle-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(91,33,182,0.15); }
 
+    .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px; letter-spacing: 0.02em; margin-bottom: 14px; }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+    .badge.mtn { background: #FFFBEB; color: #92400E; border: 1px solid #FDE68A; }
+    .badge.mtn .badge-dot { background: #D97706; }
+    .badge.telecel { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
+    .badge.telecel .badge-dot { background: #DC2626; }
+
     .bundle-data { font-size: 32px; font-weight: 700; color: #111827; letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
     .bundle-validity { font-size: 12px; color: #6B7280; display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
     .bundle-price { font-size: 22px; font-weight: 700; color: var(--violet); letter-spacing: -0.02em; margin-top: auto; padding-top: 14px; margin-bottom: 12px; }
@@ -56,8 +62,9 @@
     /* MODAL */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 500; align-items: center; justify-content: center; padding: 16px; overflow-y: auto; }
     .modal-overlay.open { display: flex; }
-    .modal { background: #fff; border-radius: 20px; width: 100%; max-width: 420px; animation: fadeUp .25s ease; box-shadow: 0 16px 60px rgba(0,0,0,0.25); margin: auto; }
+    .modal { background: #fff; border-radius: 20px; width: 100%; max-width: 440px; animation: fadeUp .25s ease; box-shadow: 0 16px 60px rgba(0,0,0,0.25); margin: auto; }
 
+    /* MODAL HEADER */
     .modal-header { background: linear-gradient(135deg, #5B21B6, #7C3AED); padding: 20px 24px; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: flex-start; }
     .modal-bundle-name { font-size: 32px; font-weight: 700; color: #fff; letter-spacing: -0.03em; margin: 8px 0 2px; line-height: 1; }
     .modal-bundle-meta { font-size: 13px; color: rgba(255,255,255,0.8); }
@@ -65,61 +72,45 @@
 
     .modal-body { padding: 24px; }
 
-    .step { display: flex; gap: 14px; margin-bottom: 20px; }
-    .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--violet-light); color: var(--violet); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
-    .step-title { font-size: 14px; font-weight: 600; color: #111827; }
-    .step-desc { font-size: 13px; color: #6B7280; margin-top: 2px; }
+    /* PAYMENT BOX */
+    .payment-box { background: linear-gradient(135deg, #2D1B6B, #5B21B6); border-radius: 14px; padding: 18px 20px; margin-bottom: 24px; }
+    .payment-box-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+    .payment-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .payment-label { font-size: 12px; color: rgba(255,255,255,0.65); }
+    .payment-value { font-size: 13px; font-weight: 600; color: #fff; }
+    .payment-number-row { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 14px; margin-top: 4px; }
+    .payment-number { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.05em; font-family: 'DM Mono', monospace; }
+    .payment-name { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+    .copy-icon-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .2s; flex-shrink: 0; }
+    .copy-icon-btn:hover { background: rgba(255,255,255,0.25); }
+    .copy-icon-btn.copied { background: #166534; border-color: #166534; }
+    .reference-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.15); border-radius: 6px; padding: 4px 10px; font-size: 13px; font-weight: 700; color: #fff; margin-top: 4px; }
 
-    .momo-box { background: #F3F4F6; border-radius: 12px; padding: 14px 16px; margin-top: 10px; }
-    .momo-label { font-size: 11px; color: #6B7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-    .momo-number { font-size: 20px; font-weight: 700; color: #111827; letter-spacing: 0.05em; margin-bottom: 2px; font-family: 'DM Mono', monospace; }
-    .momo-name-text { font-size: 13px; color: #6B7280; margin-bottom: 12px; }
-    .copy-btn { width: 100%; padding: 10px 0; background: linear-gradient(135deg, #5B21B6, #7C3AED); border: none; border-radius: 9px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .2s; }
-    .copy-btn.copied { background: #166534; }
-
-    .divider { border-top: 1px solid #E5E7EB; margin: 20px 0; }
-    .help-label { font-size: 13px; font-weight: 600; color: #374151; text-align: center; margin-bottom: 12px; }
-    .help-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
-    .help-btn { flex: 1; padding: 11px 0; border-radius: 10px; color: #fff; font-size: 13px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; transition: opacity .15s; }
-    .help-btn:hover { opacity: 0.88; }
-    .help-btn.whatsapp { background: #25D366; }
-    .help-btn.call { background: var(--violet); }
-
-    .continue-btn { width: 100%; padding: 13px 0; background: linear-gradient(135deg, #5B21B6, #7C3AED); border: none; border-radius: 10px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-    .form-title { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 4px; }
-    .form-subtitle { font-size: 13px; color: #6B7280; margin-bottom: 20px; }
-    .order-summary { background: var(--violet-light); border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; }
-    .summary-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
-    .summary-row span:first-child { color: #6B7280; }
-    .summary-row span:last-child { font-weight: 600; }
-    .summary-amount { color: var(--violet); font-weight: 700 !important; }
-
+    /* FORM */
+    .form-section-title { font-size: 13px; font-weight: 700; color: #374151; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #E5E7EB; }
     .form-label { font-size: 13px; font-weight: 600; color: #374151; display: block; margin-bottom: 6px; }
     .form-input { width: 100%; padding: 12px 14px; font-size: 14px; border: 1.5px solid #E5E7EB; border-radius: 10px; outline: none; background: #F3F4F6; color: #111827; margin-bottom: 14px; transition: border-color .15s, box-shadow .15s; }
-    .form-input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(91,33,182,0.1); }
+    .form-input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(91,33,182,0.1); background: #fff; }
 
     .error-box { background: #FEF2F2; border: 1px solid #FECACA; color: #991B1B; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; display: none; }
     .error-box.show { display: block; }
     .phone-error { color: #991B1B; font-size: 13px; margin-top: -10px; margin-bottom: 10px; display: none; }
 
-    .form-buttons { display: flex; gap: 10px; }
-    .back-btn { padding: 12px 20px; border: 1.5px solid #E5E7EB; border-radius: 10px; background: #fff; color: #6B7280; font-size: 14px; font-weight: 600; cursor: pointer; }
+    /* BUTTONS */
+    .wa-submit-btn { width: 100%; padding: 14px 0; background: #25D366; border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: opacity .15s; text-decoration: none; margin-bottom: 10px; }
+    .wa-submit-btn:hover { opacity: 0.9; }
+    .call-btn { width: 100%; padding: 12px 0; background: var(--violet); border: none; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: opacity .15s; }
+    .call-btn:hover { opacity: 0.88; }
 
-    .wa-confirm-box { background: #F0FFF4; border: 1px solid #BBF7D0; border-radius: 14px; padding: 20px; margin-bottom: 20px; text-align: center; }
-    .wa-confirm-title { font-size: 15px; font-weight: 700; color: #166534; margin-bottom: 8px; }
-    .wa-confirm-desc { font-size: 13px; color: #374151; line-height: 1.7; margin-bottom: 16px; }
-    .wa-send-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px 0; background: #25D366; border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: opacity .15s; }
-    .wa-send-btn:hover { opacity: 0.9; }
-    .call-instead { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 0; margin-top: 10px; background: var(--violet); border: none; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: opacity .15s; }
-    .call-instead:hover { opacity: 0.88; }
-
+    /* SUCCESS */
     .success-wrap { text-align: center; padding: 20px 0; }
     .success-icon { width: 64px; height: 64px; border-radius: 50%; background: #F0FDF4; border: 1px solid #BBF7D0; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
     .success-title { font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 10px; }
     .success-desc { font-size: 14px; color: #6B7280; line-height: 1.7; margin-bottom: 24px; }
     .success-note { background: var(--violet-light); border-radius: 10px; padding: 12px 16px; font-size: 13px; color: var(--violet); margin-bottom: 24px; line-height: 1.6; }
+    .done-btn { width: 100%; padding: 13px 0; background: linear-gradient(135deg, #5B21B6, #7C3AED); border: none; border-radius: 10px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
 
+    /* FAB */
     .wa-fab { position: fixed; bottom: 24px; right: 24px; z-index: 9998; display: flex; align-items: center; gap: 10px; background: #25D366; border-radius: 30px; padding: 12px 18px 12px 14px; cursor: pointer; box-shadow: 0 4px 20px rgba(37,211,102,0.45); transition: transform .2s ease, box-shadow .2s ease; text-decoration: none; }
     .wa-fab:hover { transform: scale(1.05); box-shadow: 0 6px 28px rgba(37,211,102,0.65); }
     .wa-fab span { color: #fff; font-size: 13px; font-weight: 600; }
@@ -152,7 +143,7 @@
       Secured payments · No expiry bundles
     </div>
     <h1>Data bundles,<br />delivered instantly.</h1>
-    <p>MTN & Telecel bundles. Pay with Mobile Money.</p>
+    <p>MTN &amp; Telecel bundles. Pay with Mobile Money.</p>
   </div>
 
   <div class="filters">
@@ -168,6 +159,8 @@
 <!-- MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
+
+    <!-- Header -->
     <div class="modal-header">
       <div>
         <div id="modal-badge"></div>
@@ -176,67 +169,44 @@
       </div>
       <button class="modal-close" onclick="closeModal()">&#x2715;</button>
     </div>
+
     <div class="modal-body">
 
-      <!-- STEP 1 -->
-      <div id="step1">
-        <div style="font-size:16px;font-weight:700;color:#111827;margin-bottom:4px;">How to pay</div>
-        <div style="font-size:13px;color:#6B7280;margin-bottom:20px;">Follow these simple steps to complete your purchase</div>
+      <!-- ORDER FORM -->
+      <div id="step-form">
 
-        <div class="step">
-          <div class="step-num">1</div>
-          <div style="flex:1">
-            <div class="step-title">Copy the number below</div>
-            <div class="step-desc">Send the exact amount to this MoMo number</div>
-            <div class="momo-box">
-              <div class="momo-label">Recipient</div>
-              <div class="momo-number">0243426670</div>
-              <div class="momo-name-text">Agyapong Albert Yeboah</div>
-              <button class="copy-btn" id="copy-btn" onclick="copyNumber()">Copy number</button>
+        <!-- Payment info box -->
+        <div class="payment-box">
+          <div class="payment-box-title">Payment details</div>
+          <div class="payment-row">
+            <span class="payment-label">Amount to send</span>
+            <span class="payment-value" id="payment-amount"></span>
+          </div>
+          <div class="payment-row" style="margin-bottom:6px;">
+            <span class="payment-label">Send to</span>
+          </div>
+          <div class="payment-number-row">
+            <div>
+              <div class="payment-number">0243426670</div>
+              <div class="payment-name">Agyapong Albert Yeboah</div>
+            </div>
+            <button class="copy-icon-btn" id="copy-btn" onclick="copyNumber()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <div class="payment-row" style="margin-top:12px;">
+            <span class="payment-label">Use as reference</span>
+            <div class="reference-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              Data
             </div>
           </div>
         </div>
 
-        <div class="step">
-          <div class="step-num">2</div>
-          <div>
-            <div class="step-title">Use "Data" as reference</div>
-            <div class="step-desc">Type <strong>Data</strong> as the payment reference when sending</div>
-          </div>
-        </div>
+        <!-- Form -->
+        <div class="form-section-title">Your order details</div>
 
-        <div class="step">
-          <div class="step-num">3</div>
-          <div>
-            <div class="step-title">Come back and confirm</div>
-            <div class="step-desc">After sending, click the button below to fill in your details</div>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-        <div class="help-label">Need help before paying?</div>
-        <div class="help-buttons">
-          <a id="wa-help-btn" href="#" target="_blank" class="help-btn whatsapp">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp
-          </a>
-          <a href="tel:+233243426670" class="help-btn call">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.08 1.2 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            Call us
-          </a>
-        </div>
-
-        <button class="continue-btn" onclick="goToStep2()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          I have sent the money
-        </button>
-      </div>
-
-      <!-- STEP 2 -->
-      <div id="step2" style="display:none;">
-        <div class="form-title">Your details</div>
-        <div class="form-subtitle">Fill in your details so we can verify and deliver your bundle</div>
-        <div class="order-summary" id="order-summary"></div>
         <div class="error-box" id="error-box">Please fill in all fields correctly.</div>
 
         <label class="form-label">Recipient number (who gets the data)</label>
@@ -252,54 +222,29 @@
         <label class="form-label">MoMo account name (name on your MoMo)</label>
         <input class="form-input" id="momo-name" type="text" placeholder="Name registered on your MoMo" />
 
-        <div class="form-buttons">
-          <button class="back-btn" onclick="goToStep1()">Back</button>
-          <button class="continue-btn" style="flex:1;" onclick="goToStep3()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Continue
-          </button>
-        </div>
+        <a id="wa-submit-btn" href="#" target="_blank" class="wa-submit-btn" onclick="return handleWaClick(event)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Send order on WhatsApp
+        </a>
+
+        <a href="tel:+233243426670" class="call-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.08 1.2 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Or call us instead
+        </a>
       </div>
 
-      <!-- STEP 3 -->
-      <div id="step3" style="display:none;">
-        <div class="form-title">Confirm your order</div>
-        <div class="form-subtitle">Send us a WhatsApp message or call to confirm your payment</div>
-        <div class="wa-confirm-box">
-          <div class="wa-confirm-title">Almost done!</div>
-          <div class="wa-confirm-desc">
-            Click the button below to send us a WhatsApp message with your order details automatically filled in. We will verify your payment and deliver your bundle right away!
-          </div>
-          <a id="wa-confirm-btn" href="#" target="_blank" class="wa-send-btn">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Send WhatsApp message
-          </a>
-          <a href="tel:+233243426670" class="call-instead">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.08 1.2 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            Or call us instead
-          </a>
-        </div>
-        <div style="text-align:center;margin-bottom:16px;">
-          <button onclick="goToStep2()" style="background:none;border:none;color:#6B7280;font-size:13px;cursor:pointer;text-decoration:underline;">&#8592; Edit my details</button>
-        </div>
-        <button class="continue-btn" onclick="showSuccess()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          I have sent the WhatsApp message
-        </button>
-      </div>
-
-      <!-- STEP 4 -->
-      <div id="step4" style="display:none;">
+      <!-- SUCCESS -->
+      <div id="step-success" style="display:none;">
         <div class="success-wrap">
           <div class="success-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <div class="success-title">Order confirmed!</div>
+          <div class="success-title">Order sent!</div>
           <div class="success-desc" id="success-desc"></div>
           <div class="success-note">
-            If you don't receive your bundle within 10 minutes, send us another WhatsApp message or call us directly.
+            If you don't receive your bundle within 10 minutes after paying, send us another WhatsApp message or call us directly.
           </div>
-          <button class="continue-btn" onclick="closeModal()">Done</button>
+          <button class="done-btn" onclick="closeModal()">Done</button>
         </div>
       </div>
 
@@ -348,40 +293,32 @@ const TELECEL_PREFIXES = ["020","050"];
 let currentBundle = null;
 let currentFilter = 'all';
 
-function mtnBadge(mb) {
-  return `<svg width="56" height="28" viewBox="0 0 56 28" style="display:block;margin-bottom:${mb}px;">
-    <rect width="56" height="28" rx="14" fill="#FFCC00"/>
-    <ellipse cx="28" cy="14" rx="20" ry="9" fill="none" stroke="#000" stroke-width="2.5"/>
-    <text x="28" y="18.5" text-anchor="middle" font-family="Arial" font-weight="900" font-size="10" fill="#000" letter-spacing="1.5">MTN</text>
-  </svg>`;
-}
-
-function telecelBadge(mb) {
-  return `<svg width="56" height="28" viewBox="0 0 56 28" style="display:block;margin-bottom:${mb}px;">
-    <rect width="56" height="28" rx="14" fill="#E30613"/>
-    <text x="28" y="21" text-anchor="middle" font-family="Arial" font-weight="900" font-size="22" fill="#fff">t</text>
-  </svg>`;
-}
-
-function networkBadge(network, mb) {
-  return network === 'mtn' ? mtnBadge(mb) : telecelBadge(mb);
+function badgeHTML(network) {
+  return network === 'mtn'
+    ? `<span class="badge mtn"><span class="badge-dot"></span>MTN</span>`
+    : `<span class="badge telecel"><span class="badge-dot"></span>Telecel</span>`;
 }
 
 function renderBundles() {
   const grid     = document.getElementById('bundles-grid');
   const filtered = bundles.filter(b => currentFilter === 'all' || b.network === currentFilter);
-  document.getElementById('bundle-count').textContent = `${filtered.length} bundle${filtered.length !== 1 ? 's' : ''} available`;
+  document.getElementById('bundle-count').textContent =
+    `${filtered.length} bundle${filtered.length !== 1 ? 's' : ''} available`;
   grid.innerHTML = filtered.map((b, i) => `
     <div class="bundle-card" style="animation-delay:${i*0.05}s">
-      ${networkBadge(b.network, 14)}
+      ${badgeHTML(b.network)}
       <div class="bundle-data">${b.data}</div>
       <div class="bundle-validity">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
         ${b.validity}
       </div>
       <div class="bundle-price">GH&#8373; ${b.price.toFixed(2)}</div>
       <button class="buy-btn" onclick="openModal('${b.id}')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
         Buy now
       </button>
     </div>
@@ -398,12 +335,28 @@ function filterBundles(network, btn) {
 function openModal(id) {
   currentBundle = bundles.find(b => b.id === id);
   if (!currentBundle) return;
-  document.getElementById('modal-badge').innerHTML = networkBadge(currentBundle.network, 8);
+
+  document.getElementById('modal-badge').innerHTML = badgeHTML(currentBundle.network);
   document.getElementById('modal-data').textContent = currentBundle.data;
-  document.getElementById('modal-meta').textContent = `${currentBundle.validity} · GH&#8373; ${currentBundle.price.toFixed(2)}`;
-  document.getElementById('wa-help-btn').href =
-    `https://wa.me/233243426670?text=Hello!%20I%20want%20to%20buy%20${currentBundle.data}%20${currentBundle.network.toUpperCase()}%20bundle%20for%20GH%C2%A2${currentBundle.price}.%20Please%20help%20me.`;
-  goToStep1();
+  document.getElementById('modal-meta').textContent = `${currentBundle.validity} · GH\u20B3 ${currentBundle.price.toFixed(2)}`;
+  document.getElementById('payment-amount').textContent = `GH\u20B3 ${currentBundle.price.toFixed(2)}`;
+
+  // Reset form
+  ['recipient-phone','sender-name','sender-phone','momo-name'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('phone-error').style.display = 'none';
+  document.getElementById('error-box').classList.remove('show');
+
+  // Show form, hide success
+  document.getElementById('step-form').style.display = 'block';
+  document.getElementById('step-success').style.display = 'none';
+
+  // Reset copy button
+  const copyBtn = document.getElementById('copy-btn');
+  copyBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy`;
+  copyBtn.classList.remove('copied');
+
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -411,29 +364,18 @@ function openModal(id) {
 function closeModal() {
   document.getElementById('modal').classList.remove('open');
   document.body.style.overflow = '';
-  ['recipient-phone','sender-name','sender-phone','momo-name'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  document.getElementById('phone-error').style.display = 'none';
-  document.getElementById('error-box').classList.remove('show');
 }
 
-function showStep(n) {
-  [1,2,3,4].forEach(i => {
-    document.getElementById('step'+i).style.display = i === n ? 'block' : 'none';
+function copyNumber() {
+  navigator.clipboard.writeText('0243426670').then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy`;
+      btn.classList.remove('copied');
+    }, 2000);
   });
-}
-
-function goToStep1() { showStep(1); }
-
-function goToStep2() {
-  document.getElementById('order-summary').innerHTML = `
-    <div class="summary-row"><span>Bundle</span><span>${currentBundle.data} — ${currentBundle.network === 'mtn' ? 'MTN' : 'Telecel'}</span></div>
-    <div class="summary-row"><span>Amount to send</span><span class="summary-amount">GH&#8373; ${currentBundle.price.toFixed(2)}</span></div>
-    <div class="summary-row"><span>Send to</span><span>0243426670</span></div>
-    <div class="summary-row"><span>Reference</span><span><strong>Data</strong></span></div>
-  `;
-  showStep(2);
 }
 
 function validatePhone(phone, network) {
@@ -448,57 +390,54 @@ function validatePhone(phone, network) {
   return '';
 }
 
-function goToStep3() {
+function handleWaClick(e) {
   const recipientPhone = document.getElementById('recipient-phone').value.trim();
   const senderName     = document.getElementById('sender-name').value.trim();
   const senderPhone    = document.getElementById('sender-phone').value.trim();
   const momoName       = document.getElementById('momo-name').value.trim();
 
+  // Validate phone
   const phoneErr = validatePhone(recipientPhone, currentBundle.network);
   if (phoneErr) {
+    e.preventDefault();
     document.getElementById('phone-error').textContent = phoneErr;
     document.getElementById('phone-error').style.display = 'block';
-    return;
+    return false;
   }
   document.getElementById('phone-error').style.display = 'none';
 
+  // Validate other fields
   if (!senderName || !senderPhone || !momoName) {
+    e.preventDefault();
     document.getElementById('error-box').textContent = 'Please fill in all fields.';
     document.getElementById('error-box').classList.add('show');
-    return;
+    return false;
   }
   document.getElementById('error-box').classList.remove('show');
 
+  // Build WhatsApp message
   const msg = encodeURIComponent(
-    `Hello! I just sent GH${String.fromCharCode(8373)} ${currentBundle.price.toFixed(2)} for a ${currentBundle.data} ${currentBundle.network.toUpperCase()} bundle.\n\n` +
-    `Bundle: ${currentBundle.data} — ${currentBundle.network === 'mtn' ? 'MTN' : 'Telecel'}\n` +
+    `Hello! I want to order a data bundle.\n\n` +
+    `Bundle: ${currentBundle.data} \u2014 ${currentBundle.network === 'mtn' ? 'MTN' : 'Telecel'}\n` +
+    `Amount: GH\u20B3 ${currentBundle.price.toFixed(2)}\n` +
     `Recipient number: ${recipientPhone}\n` +
     `My name: ${senderName}\n` +
     `My phone: ${senderPhone}\n` +
-    `MoMo name: ${momoName}\n` +
-    `Amount sent: GH${String.fromCharCode(8373)} ${currentBundle.price.toFixed(2)}\n` +
-    `Reference used: Data\n\n` +
-    `Please verify and deliver. Thank you!`
+    `MoMo name: ${momoName}\n\n` +
+    `I have sent the money with reference: Data`
   );
 
-  document.getElementById('wa-confirm-btn').href = `https://wa.me/233243426670?text=${msg}`;
-  showStep(3);
-}
+  document.getElementById('wa-submit-btn').href = `https://wa.me/233243426670?text=${msg}`;
 
-function showSuccess() {
-  const recipientPhone = document.getElementById('recipient-phone').value.trim();
-  document.getElementById('success-desc').textContent =
-    `Thank you! We have received your message and will verify your payment shortly. Your ${currentBundle.data} bundle will be delivered to ${recipientPhone} as soon as payment is confirmed.`;
-  showStep(4);
-}
+  // Show success after short delay
+  setTimeout(() => {
+    document.getElementById('success-desc').textContent =
+      `Thank you! We have received your order for ${currentBundle.data} ${currentBundle.network === 'mtn' ? 'MTN' : 'Telecel'} bundle to be delivered to ${recipientPhone}. We will verify your payment and deliver shortly.`;
+    document.getElementById('step-form').style.display = 'none';
+    document.getElementById('step-success').style.display = 'block';
+  }, 500);
 
-function copyNumber() {
-  navigator.clipboard.writeText('0243426670').then(() => {
-    const btn = document.getElementById('copy-btn');
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy number'; btn.classList.remove('copied'); }, 2000);
-  });
+  return true;
 }
 
 document.getElementById('modal').addEventListener('click', function(e) {
